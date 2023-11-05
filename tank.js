@@ -1,16 +1,17 @@
 class Tank {
-  constructor(x, y, width, c) {
-    this.x = x;
-    this.y = y;
+  constructor(x, y, width, c, speed) {
+    this.pos = createVector(x, y);
     this.width = width;
     this.height = this.width * 0.75;
     this.c = c;
     this.angle = 0;
+    this.speed = speed;
+    this.velocity = createVector(0, 0);
   }
 
   display() {
     push();
-    translate(this.x, this.y);
+    translate(this.pos.x, this.pos.y);
     rotate(this.angle);
     rectMode(CENTER);
     fill(this.c);
@@ -20,22 +21,20 @@ class Tank {
   }
 
   moveForward() {
-    print("moving");
-    this.x += 2;
+    this.pos.x += this.speed * cos(this.angle);
+    this.pos.y += this.speed * sin(this.angle);
   }
 
   moveBack() {
-    print("moving");
-    this.x -= 2;
+    this.pos.x -= this.speed * cos(this.angle);
+    this.pos.y -= this.speed * sin(this.angle);
   }
 
   turnLeft() {
-    print("moving");
     this.angle -= 2;
   }
 
   turnRight() {
-    print("moving");
     this.angle += 2;
   }
 }
