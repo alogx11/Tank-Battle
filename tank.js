@@ -37,4 +37,15 @@ class Tank {
   turnRight() {
     this.angle += 2;
   }
+
+  isColliding(otherTank) {
+    // Check if this tank is colliding with another tank
+    const distance = dist(
+      this.pos.x,
+      this.pos.y,
+      otherTank.pos.x,
+      otherTank.pos.y
+    );
+    return distance < (this.width + otherTank.width) / 2;
+  }
 }

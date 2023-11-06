@@ -1,6 +1,6 @@
 let redTank, blueTank;
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth - 10, windowHeight - 10);
 
   // tank param (x, y, width, color, speed)
   redTank = new Tank(
@@ -21,38 +21,58 @@ function setup() {
 
 function draw() {
   background("white");
-  // Handle controls for the red tank (wasd)
+
+  // Handle controls for the red tank (WASD keys)
   if (keyIsDown(65) || keyIsDown(97)) {
-    // 65 is the key code for "a", and 97 is the key code for "A"
     redTank.turnLeft();
+    if (redTank.isColliding(blueTank)) {
+      redTank.turnRight(); // Reverse the rotation if it causes a collision
+    }
   }
   if (keyIsDown(68) || keyIsDown(100)) {
-    // 68 is the key code for "d", and 100 is the key code for "D"
     redTank.turnRight();
+    if (redTank.isColliding(blueTank)) {
+      redTank.turnLeft(); // Reverse the rotation if it causes a collision
+    }
   }
   if (keyIsDown(87) || keyIsDown(119)) {
-    // 87 is the key code for "w", and 119 is the key code for "W"
     redTank.moveForward();
+    if (redTank.isColliding(blueTank)) {
+      redTank.moveBack(); // Reverse the movement if it causes a collision
+    }
   }
   if (keyIsDown(83) || keyIsDown(115)) {
-    // 83 is the key code for "s", and 115 is the key code for "S"
     redTank.moveBack();
+    if (redTank.isColliding(blueTank)) {
+      redTank.moveForward(); // Reverse the movement if it causes a collision
+    }
   }
 
   // Handle controls for the blue tank (Arrow keys)
   if (keyIsDown(LEFT_ARROW)) {
     blueTank.turnLeft();
+    if (blueTank.isColliding(redTank)) {
+      blueTank.turnRight(); // Reverse the rotation if it causes a collision
+    }
   }
   if (keyIsDown(RIGHT_ARROW)) {
     blueTank.turnRight();
+    if (blueTank.isColliding(redTank)) {
+      blueTank.turnLeft(); // Reverse the rotation if it causes a collision
+    }
   }
   if (keyIsDown(UP_ARROW)) {
     blueTank.moveForward();
+    if (blueTank.isColliding(redTank)) {
+      blueTank.moveBack(); // Reverse the movement if it causes a collision
+    }
   }
   if (keyIsDown(DOWN_ARROW)) {
     blueTank.moveBack();
+    if (blueTank.isColliding(redTank)) {
+      blueTank.moveForward(); // Reverse the movement if it causes a collision
+    }
   }
-
   redTank.display();
   blueTank.display();
 }
