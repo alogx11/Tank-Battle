@@ -20,7 +20,7 @@ function setup() {
 }
 
 function draw() {
-  background("gray");
+  background("white");
   // Handle controls for the red tank (wasd)
   if (keyIsDown(65) || keyIsDown(97)) {
     // 65 is the key code for "a", and 97 is the key code for "A"
@@ -40,22 +40,19 @@ function draw() {
   }
 
   // Handle controls for the blue tank (Arrow keys)
-  if (keyIsDown(LEFT)) {
+  if (keyIsDown(LEFT_ARROW)) {
     blueTank.turnLeft();
   }
-  if (keyIsDown(RIGHT)) {
+  if (keyIsDown(RIGHT_ARROW)) {
     blueTank.turnRight();
   }
-  if (keyIsDown(UP)) {
+  if (keyIsDown(UP_ARROW)) {
     blueTank.moveForward();
   }
-  if (keyIsDown(DOWN)) {
+  if (keyIsDown(DOWN_ARROW)) {
     blueTank.moveBack();
   }
+
   redTank.display();
   blueTank.display();
-}
-
-function keyPressed() {
-  print(keyCode);
 }
