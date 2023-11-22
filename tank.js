@@ -7,6 +7,7 @@ class Tank {
     this.angle = 0;
     this.speed = speed;
     this.velocity = createVector(0, 0);
+    this.bullets[10];
   }
 
   display() {
@@ -37,6 +38,17 @@ class Tank {
   turnRight() {
     this.angle += 2;
   }
+
+  // shootBullet() {
+  //   const bulletSpeed = 5; // Set the speed of the bullet
+  //   const bullet = new Bullet(
+  //     this.pos.x,
+  //     this.pos.y,
+  //     this.angle,
+  //     bulletSpeed
+  //   );
+  //   return bullet;
+  // }
 
   isColliding(otherTank) {
     // Check if this tank is colliding with another tank

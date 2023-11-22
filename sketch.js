@@ -75,4 +75,22 @@ function draw() {
   }
   redTank.display();
   blueTank.display();
+  // for(let i = 0; i < redTank.bullets.length; i++){
+  //   redTank.bullets[i].display();
+  //   redTank.bullets[i].update();
+  // }
+  // for(let i = 0; i < blueTank.bullets.length; i++){
+  //   blueTank.bullets[i].display();
+  //   blueTank.bullets[i].update();
+  // }
+
 }
+
+// function keyPressed() {
+//   if (key === 'e' || key === 'E') {
+//     redTank.bullets.push(redTank.shootBullet());
+//   }
+//   if (key === '/') {
+//     blueTank.bullets.push(blueTank.shootBullet());
+//   }
+// }
