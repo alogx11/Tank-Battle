@@ -73,24 +73,54 @@ function draw() {
       blueTank.moveForward(); // Reverse the movement if it causes a collision
     }
   }
-  redTank.display();
-  blueTank.display();
-  // for(let i = 0; i < redTank.bullets.length; i++){
-  //   redTank.bullets[i].display();
-  //   redTank.bullets[i].update();
-  // }
-  // for(let i = 0; i < blueTank.bullets.length; i++){
-  //   blueTank.bullets[i].display();
-  //   blueTank.bullets[i].update();
-  // }
+
+  for (let i = 0; i < redTank.bullets.length; i++) {
+    redTank.bullets[i].display();
+    redTank.bullets[i].update();
+    // check if a bullet hits a tank
+    if (blueTank.isHit(redTank.bullets[i]) && blueTank.alive) {
+      blueTank.alive = false;
+      redTank.bullets.splice(i, 1);
+    } else if (redTank.isHit(redTank.bullets[i]) && redTank.alive) {
+      redTank.alive = false;
+      redTank.bullets.splice(i, 1);
+    }
+    // delete bullets that go off screen
+    else if (redTank.bullets[i].pos.x < 0 || redTank.bullets[i].pos.x > width || redTank.bullets[i].pos.y < 0 || redTank.bullets[i].pos.y > height) {
+      redTank.bullets.splice(i, 1);
+    }
+  }
+  for (let i = 0; i < blueTank.bullets.length; i++) {
+    blueTank.bullets[i].display();
+    blueTank.bullets[i].update();
+    if (blueTank.isHit(blueTank.bullets[i]) && blueTank.alive) {
+      blueTank.alive = false;
+      blueTank.bullets.splice(i,1);
+    }
+    else if (redTank.isHit(blueTank.bullets[i]) && redTank.alive) {
+      redTank.alive = false;
+      blueTank.bullets.splice(i,1);
+    }
+    else if(blueTank.bullets[i].pos.x < 0 || blueTank.bullets[i].pos.x > width || blueTank.bullets[i].pos.y < 0 || blueTank.bullets[i].pos.y > height) {
+      blueTank.bullets.splice(i, 1);
+    }
+  }
+  if (redTank.alive) {
+    redTank.display();
+  }
+  if (blueTank.alive) {
+    blueTank.display();
+  }
+  // redTank.display();
+  // blueTank.display();
 
 }
 
-// function keyPressed() {
-//   if (key === 'e' || key === 'E') {
-//     redTank.bullets.push(redTank.shootBullet());
-//   }
-//   if (key === '/') {
-//     blueTank.bullets.push(blueTank.shootBullet());
-//   }
-// }
+function keyPressed() {
+  if (key === 'e' || key === 'E') {
+    redTank.bullets.push(redTank.shootBullet());
+  }
+  if (key === '/') {
+    blueTank.bullets.push(blueTank.shootBullet());
+  }
+}

@@ -6,6 +6,7 @@ class Bullet {
       this.velocity = p5.Vector.fromAngle(radians(this.angle));
       this.velocity.mult(this.speed);
       this.radius = 5;
+      this.width = this.radius;
     }
     
   update() {

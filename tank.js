@@ -7,7 +7,8 @@ class Tank {
     this.angle = 0;
     this.speed = speed;
     this.velocity = createVector(0, 0);
-    this.bullets[10];
+    this.bullets = [];
+    this.alive = true;
   }
 
   display() {
@@ -39,16 +40,19 @@ class Tank {
     this.angle += 2;
   }
 
-  // shootBullet() {
-  //   const bulletSpeed = 5; // Set the speed of the bullet
-  //   const bullet = new Bullet(
-  //     this.pos.x,
-  //     this.pos.y,
-  //     this.angle,
-  //     bulletSpeed
-  //   );
-  //   return bullet;
-  // }
+  shootBullet() {
+    const bulletSpeed = 5; // Set the speed of the bullet
+     // Calculate the position at the edge of the tank
+     const offsetX = (this.width / 2 ) * cos(this.angle); // Change '5' for desired offset
+     const offsetY = (this.width / 2) * sin(this.angle); // Change '5' for desired offset
+    const bullet = new Bullet(
+      this.pos.x + offsetX,
+      this.pos.y + offsetY,
+      this.angle,
+      bulletSpeed
+    );
+    return bullet;
+  }
 
   isColliding(otherTank) {
     // Check if this tank is colliding with another tank
@@ -59,5 +63,16 @@ class Tank {
       otherTank.pos.y
     );
     return distance < (this.width + otherTank.width) / 2;
+  }
+
+  isHit(bullet) {
+    // Check if this tank is hit by a bullet
+    const distance = dist(
+      this.pos.x,
+      this.pos.y,
+      bullet.pos.x,
+      bullet.pos.y
+    );
+    return distance < (this.width + bullet.radius) / 2;
   }
 }
