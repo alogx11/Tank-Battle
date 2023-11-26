@@ -10,32 +10,39 @@ class GameOfLife {
   }
 
   computeGeneration() {
-    for (let i = 0; i < columns; i++) {
-      for (let j = 0; j < rows; j++) {
-        let neighbors = countNeighbors(i, j);
-        if (grid[i][j] == 1 && (neighbors < 2 || neighbors > 3)) {
-          nextGrid[i][j] = 0;
-        } else if (grid[i][j] == 0 && neighbors == 3) {
-          nextGrid[i][j] = 1;
+    for (let i = 0; i < this.columns; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        let neighbors = this.countNeighbors(i, j);
+        if (this.grid[i][j] == 1 && (neighbors < 2 || neighbors > 3)) {
+          this.nextGrid[i][j] = 0;
+        } else if (this.grid[i][j] == 0 && neighbors == 3) {
+          this.nextGrid[i][j] = 1;
         } else {
-          nextGrid[i][j] = grid[i][j];
+          this.nextGrid[i][j] = this.grid[i][j];
         }
       }
     }
 
-    let temp = grid;
-    grid = nextGrid;
-    nextGrid = temp;
+    let temp = this.grid;
+    this.grid = this.nextGrid;
+    this.nextGrid = temp;
   }
 
   displayGrid() {
-    for (let i = 0; i < columns; i++) {
-      for (let j = 0; j < rows; j++) {
-        let c = grid[i][j] == 1 ? aliveColor : bgColor;
+    push();
+    for (let i = 0; i < this.columns; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        let c = this.grid[i][j] == 1 ? this.aliveColor : this.bgColor;
         fill(c);
-        rect(i * cellSize, j * cellSize, cellSize, cellSize);
+        rect(
+          i * this.cellSize,
+          j * this.cellSize,
+          this.cellSize,
+          this.cellSize
+        );
       }
     }
+    pop();
   }
 
   countNeighbors(x, y) {
@@ -43,27 +50,30 @@ class GameOfLife {
     for (let i = -1; i <= 1; i++) {
       for (let j = -1; j <= 1; j++) {
         if (i == 0 && j == 0) continue; // check ordered pairs aound x,y
-        count += grid[(x + i + columns) % columns][(y + j + rows) % rows];
+        count +=
+          this.grid[(x + i + this.columns) % this.columns][
+            (y + j + this.rows) % this.rows
+          ];
       }
     }
     return count;
   }
 
   createGrid() {
-    grid = new Array(columns); // create array of length columns of arrays.
-    nextGrid = new Array(columns); // create second array where we store computed values
-    for (let i = 0; i < grid.length; i++) {
-      grid[i] = new Array(rows); // set length of each column
-      grid[i].fill(0); // fill each column full of 0s
-      nextGrid[i] = new Array(rows);
-      nextGrid[i].fill(0);
-      for (let j = 0; j < rows; j++) {
+    this.grid = new Array(this.columns); // create array of length columns of arrays.
+    this.nextGrid = new Array(this.columns); // create second array where we store computed values
+    for (let i = 0; i < this.grid.length; i++) {
+      this.grid[i] = new Array(this.rows); // set length of each column
+      this.grid[i].fill(0); // fill each column full of 0s
+      this.nextGrid[i] = new Array(this.rows);
+      this.nextGrid[i].fill(0);
+      for (let j = 0; j < this.rows; j++) {
         //randomly fill each cell with a 1 or 0
         let x = Math.random();
         if (x > 0.5) {
-          grid[i][j] = 1;
+          this.grid[i][j] = 1;
         } else {
-          grid[i][j] == 0;
+          this.grid[i][j] = 0;
         }
       }
     }

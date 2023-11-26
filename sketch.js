@@ -1,7 +1,8 @@
 let redTank, blueTank;
+let grid;
 function setup() {
   createCanvas(windowWidth - 10, windowHeight - 10);
-
+  grid = new GameOfLife(15); // paramter is size of a cell
   // tank param (x, y, width, color, speed)
   redTank = new Tank(
     windowWidth / 4,
@@ -17,11 +18,12 @@ function setup() {
     color(0, 0, 255),
     2
   );
+  grid.createGrid();
 }
 
 function draw() {
-  background("white");
-
+  grid.displayGrid();
+  grid.computeGeneration();
   // Handle controls for the red tank (WASD keys)
   if (keyIsDown(65) || keyIsDown(97)) {
     redTank.turnLeft();
@@ -86,7 +88,12 @@ function draw() {
       redTank.bullets.splice(i, 1);
     }
     // delete bullets that go off screen
-    else if (redTank.bullets[i].pos.x < 0 || redTank.bullets[i].pos.x > width || redTank.bullets[i].pos.y < 0 || redTank.bullets[i].pos.y > height) {
+    else if (
+      redTank.bullets[i].pos.x < 0 ||
+      redTank.bullets[i].pos.x > width ||
+      redTank.bullets[i].pos.y < 0 ||
+      redTank.bullets[i].pos.y > height
+    ) {
       redTank.bullets.splice(i, 1);
     }
   }
@@ -95,13 +102,16 @@ function draw() {
     blueTank.bullets[i].update();
     if (blueTank.isHit(blueTank.bullets[i]) && blueTank.alive) {
       blueTank.alive = false;
-      blueTank.bullets.splice(i,1);
-    }
-    else if (redTank.isHit(blueTank.bullets[i]) && redTank.alive) {
+      blueTank.bullets.splice(i, 1);
+    } else if (redTank.isHit(blueTank.bullets[i]) && redTank.alive) {
       redTank.alive = false;
-      blueTank.bullets.splice(i,1);
-    }
-    else if(blueTank.bullets[i].pos.x < 0 || blueTank.bullets[i].pos.x > width || blueTank.bullets[i].pos.y < 0 || blueTank.bullets[i].pos.y > height) {
+      blueTank.bullets.splice(i, 1);
+    } else if (
+      blueTank.bullets[i].pos.x < 0 ||
+      blueTank.bullets[i].pos.x > width ||
+      blueTank.bullets[i].pos.y < 0 ||
+      blueTank.bullets[i].pos.y > height
+    ) {
       blueTank.bullets.splice(i, 1);
     }
   }
@@ -113,14 +123,13 @@ function draw() {
   }
   // redTank.display();
   // blueTank.display();
-
 }
 
 function keyPressed() {
-  if (key === 'e' || key === 'E') {
+  if (key === "e" || key === "E") {
     redTank.bullets.push(redTank.shootBullet());
   }
-  if (key === '/') {
+  if (key === "/") {
     blueTank.bullets.push(blueTank.shootBullet());
   }
 }
