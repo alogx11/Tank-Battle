@@ -2,7 +2,7 @@ let redTank, blueTank;
 let grid;
 function setup() {
   createCanvas(windowWidth - 10, windowHeight - 10);
-  grid = new GameOfLife(15); // paramter is size of a cell
+  grid = new GameOfLife(25); // paramter is size of a cell
   // tank param (x, y, width, color, speed)
   redTank = new Tank(
     windowWidth / 4,
