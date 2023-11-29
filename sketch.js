@@ -110,7 +110,10 @@ function draw() {
       blueTank.bullets[i].pos.x < 0 ||
       blueTank.bullets[i].pos.x > width ||
       blueTank.bullets[i].pos.y < 0 ||
-      blueTank.bullets[i].pos.y > height
+      blueTank.bullets[i].pos.y > height ||
+      grid.grid[Math.floor(blueTank.bullets[i].pos.x / grid.cellSize)][
+        blueTank.bullets[i].pos.y / grid.cellSize
+      ] == 1
     ) {
       blueTank.bullets.splice(i, 1);
     }

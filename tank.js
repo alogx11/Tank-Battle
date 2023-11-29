@@ -42,9 +42,9 @@ class Tank {
 
   shootBullet() {
     const bulletSpeed = 5; // Set the speed of the bullet
-     // Calculate the position at the edge of the tank
-     const offsetX = (this.width / 2 ) * cos(this.angle); // Change '5' for desired offset
-     const offsetY = (this.width / 2) * sin(this.angle); // Change '5' for desired offset
+    // Calculate the position at the edge of the tank
+    const offsetX = (this.width / 2) * cos(this.angle); // Change '5' for desired offset
+    const offsetY = (this.width / 2) * sin(this.angle); // Change '5' for desired offset
     const bullet = new Bullet(
       this.pos.x + offsetX,
       this.pos.y + offsetY,
@@ -67,12 +67,9 @@ class Tank {
 
   isHit(bullet) {
     // Check if this tank is hit by a bullet
-    const distance = dist(
-      this.pos.x,
-      this.pos.y,
-      bullet.pos.x,
-      bullet.pos.y
-    );
+    const distance = dist(this.pos.x, this.pos.y, bullet.pos.x, bullet.pos.y);
     return distance < (this.width + bullet.radius) / 2;
   }
+
+  isHittingGrid(x, y) {}
 }

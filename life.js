@@ -12,13 +12,20 @@ class GameOfLife {
   computeGeneration() {
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
-        let neighbors = this.countNeighbors(i, j);
-        if (this.grid[i][j] == 1 && (neighbors < 2 || neighbors > 3)) {
+        if (
+          this.isCellOccupiedByTank(i, j, redTank) ||
+          this.isCellOccupiedByTank(i, j, blueTank)
+        ) {
           this.nextGrid[i][j] = 0;
-        } else if (this.grid[i][j] == 0 && neighbors == 3) {
-          this.nextGrid[i][j] = 1;
         } else {
-          this.nextGrid[i][j] = this.grid[i][j];
+          let neighbors = this.countNeighbors(i, j);
+          if (this.grid[i][j] == 1 && (neighbors < 2 || neighbors > 3)) {
+            this.nextGrid[i][j] = 0;
+          } else if (this.grid[i][j] == 0 && neighbors == 3) {
+            this.nextGrid[i][j] = 1;
+          } else {
+            this.nextGrid[i][j] = this.grid[i][j];
+          }
         }
       }
     }
@@ -77,5 +84,14 @@ class GameOfLife {
         }
       }
     }
+  }
+
+  isCellOccupiedByTank(x, y, tank) {
+    let x1 = Math.floor(tank.pos.x - tank.width / this.cellSize);
+    let y1 = Math.floor(tank.pos.y - tank.width / this.cellSize);
+    let x2 = Math.floor(tank.pos.x + tank.width / this.cellSize);
+    let y2 = Math.floor(tank.pos.y + tank.width / this.cellSize);
+
+    return x >= x1 && x <= x2 && y >= y1 && y <= y2;
   }
 }
