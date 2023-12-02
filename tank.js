@@ -33,15 +33,15 @@ class Tank {
   }
 
   turnLeft() {
-    this.angle -= 2;
+    this.angle -= this.speed;
   }
 
   turnRight() {
-    this.angle += 2;
+    this.angle += this.speed;
   }
 
   shootBullet() {
-    const bulletSpeed = 5; // Set the speed of the bullet
+    const bulletSpeed = 5 + this.speed; // Set the speed of the bullet
     // Calculate the position at the edge of the tank
     const offsetX = (this.width / 2) * cos(this.angle); // Change '5' for desired offset
     const offsetY = (this.width / 2) * sin(this.angle); // Change '5' for desired offset
@@ -71,5 +71,5 @@ class Tank {
     return distance < (this.width + bullet.radius) / 2;
   }
 
-  isHittingGrid(x, y) {}
+  isHittingGrid(x, y, cellSize) {}
 }

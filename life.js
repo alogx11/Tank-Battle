@@ -12,20 +12,13 @@ class GameOfLife {
   computeGeneration() {
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
-        if (
-          this.isCellOccupiedByTank(i, j, redTank) ||
-          this.isCellOccupiedByTank(i, j, blueTank)
-        ) {
+        let neighbors = this.countNeighbors(i, j);
+        if (this.grid[i][j] == 1 && (neighbors < 2 || neighbors > 3)) {
           this.nextGrid[i][j] = 0;
+        } else if (this.grid[i][j] == 0 && neighbors == 3) {
+          this.nextGrid[i][j] = 1;
         } else {
-          let neighbors = this.countNeighbors(i, j);
-          if (this.grid[i][j] == 1 && (neighbors < 2 || neighbors > 3)) {
-            this.nextGrid[i][j] = 0;
-          } else if (this.grid[i][j] == 0 && neighbors == 3) {
-            this.nextGrid[i][j] = 1;
-          } else {
-            this.nextGrid[i][j] = this.grid[i][j];
-          }
+          this.nextGrid[i][j] = this.grid[i][j];
         }
       }
     }
@@ -37,8 +30,16 @@ class GameOfLife {
 
   displayGrid() {
     push();
+    noStroke();
+    rectMode(CORNER);
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
+        if (
+          this.isTankHittingCell(i, j, redTank) ||
+          this.isTankHittingCell(i, j, blueTank)
+        ) {
+          this.grid[i][j] == 0;
+        }
         let c = this.grid[i][j] == 1 ? this.aliveColor : this.bgColor;
         fill(c);
         rect(
@@ -93,5 +94,18 @@ class GameOfLife {
     let y2 = Math.floor(tank.pos.y + tank.width / this.cellSize);
 
     return x >= x1 && x <= x2 && y >= y1 && y <= y2;
+  }
+
+  isTankHittingCell(x, y, tank) {
+    let cellCenterX = x + this.cellSize / 2;
+    let cellCenterY = y + this.cellSize / 2;
+    print("cell x: " + x, " cell y: " + y);
+    print("tank x: " + tank.pos.x, " tank y: " + tank.pos.y);
+    // Calculate distance between tank center and cell position
+    print("max dist = " + tank.width / 2 + this.cellSize / 2);
+    let distance = dist(x, y, tank.pos.x, tank.pos.y);
+    print(distance);
+    print(distance <= tank.width + this.cellSize);
+    return distance <= tank.width + this.cellSize * 100;
   }
 }

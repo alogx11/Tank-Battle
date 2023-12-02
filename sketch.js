@@ -9,21 +9,24 @@ function setup() {
     windowHeight / 2,
     windowWidth * 0.04,
     color(255, 0, 0),
-    2
+    4
   );
   blueTank = new Tank(
     (windowWidth / 4) * 3,
     windowHeight / 2,
     windowWidth * 0.04,
     color(0, 0, 255),
-    2
+    4
   );
   grid.createGrid();
+  frameRate(30);
 }
 
 function draw() {
   grid.displayGrid();
-  grid.computeGeneration();
+  if (frameCount % 5 == 0) {
+    //grid.computeGeneration();
+  }
   // Handle controls for the red tank (WASD keys)
   if (keyIsDown(65) || keyIsDown(97)) {
     redTank.turnLeft();
