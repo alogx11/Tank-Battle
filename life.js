@@ -35,10 +35,11 @@ class GameOfLife {
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
         if (
-          this.isTankHittingCell(i, j, redTank) ||
-          this.isTankHittingCell(i, j, blueTank)
+          redTank.isHittingGrid(i, j, this.cellSize) ||
+          blueTank.isHittingGrid(i, j, this.cellSize)
         ) {
-          this.grid[i][j] == 0;
+          print("hit");
+          this.grid[i][j] = 0;
         }
         let c = this.grid[i][j] == 1 ? this.aliveColor : this.bgColor;
         fill(c);
@@ -85,27 +86,5 @@ class GameOfLife {
         }
       }
     }
-  }
-
-  isCellOccupiedByTank(x, y, tank) {
-    let x1 = Math.floor(tank.pos.x - tank.width / this.cellSize);
-    let y1 = Math.floor(tank.pos.y - tank.width / this.cellSize);
-    let x2 = Math.floor(tank.pos.x + tank.width / this.cellSize);
-    let y2 = Math.floor(tank.pos.y + tank.width / this.cellSize);
-
-    return x >= x1 && x <= x2 && y >= y1 && y <= y2;
-  }
-
-  isTankHittingCell(x, y, tank) {
-    let cellCenterX = x + this.cellSize / 2;
-    let cellCenterY = y + this.cellSize / 2;
-    print("cell x: " + x, " cell y: " + y);
-    print("tank x: " + tank.pos.x, " tank y: " + tank.pos.y);
-    // Calculate distance between tank center and cell position
-    print("max dist = " + tank.width / 2 + this.cellSize / 2);
-    let distance = dist(x, y, tank.pos.x, tank.pos.y);
-    print(distance);
-    print(distance <= tank.width + this.cellSize);
-    return distance <= tank.width + this.cellSize * 100;
   }
 }

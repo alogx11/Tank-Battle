@@ -71,5 +71,10 @@ class Tank {
     return distance < (this.width + bullet.radius) / 2;
   }
 
-  isHittingGrid(x, y, cellSize) {}
+  isHittingGrid(x, y, cellSize) {
+    x = x * cellSize + cellSize / 2;
+    y = y * cellSize + cellSize / 2;
+    const distance = dist(this.pos.x, this.pos.y, x, y);
+    return distance < (this.width + cellSize) / 2;
+  }
 }

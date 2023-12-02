@@ -24,9 +24,10 @@ function setup() {
 
 function draw() {
   grid.displayGrid();
-  if (frameCount % 5 == 0) {
-    //grid.computeGeneration();
-  }
+  // if (frameCount % 10 == 0) {
+  //   grid.computeGeneration();
+  // }
+  grid.computeGeneration();
   // Handle controls for the red tank (WASD keys)
   if (keyIsDown(65) || keyIsDown(97)) {
     redTank.turnLeft();
