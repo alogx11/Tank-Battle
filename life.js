@@ -35,8 +35,9 @@ class GameOfLife {
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
         if (
-          redTank.isHittingGrid(i, j, this.cellSize) ||
-          blueTank.isHittingGrid(i, j, this.cellSize)
+          this.grid[i][j] == 1 &&
+          (redTank.isHittingGrid(i, j, this.cellSize) ||
+            blueTank.isHittingGrid(i, j, this.cellSize))
         ) {
           print("hit");
           this.grid[i][j] = 0;

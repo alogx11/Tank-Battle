@@ -1,10 +1,10 @@
 class Tank {
-  constructor(x, y, width, c, speed) {
+  constructor(x, y, width, c, speed, angle) {
     this.pos = createVector(x, y);
     this.width = width;
     this.height = this.width * 0.75;
     this.c = c;
-    this.angle = 0;
+    this.angle = angle;
     this.speed = speed;
     this.velocity = createVector(0, 0);
     this.bullets = [];
@@ -56,6 +56,9 @@ class Tank {
 
   isColliding(otherTank) {
     // Check if this tank is colliding with another tank
+    if (!otherTank.alive) {
+      return false;
+    }
     const distance = dist(
       this.pos.x,
       this.pos.y,
