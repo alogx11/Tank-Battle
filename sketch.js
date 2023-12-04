@@ -1,6 +1,6 @@
 let redTank, blueTank;
 let grid;
-const staticGrid = true;
+const staticGrid = false;
 function setup() {
   grid = new GameOfLife(25); // paramter is size of a cell
   createCanvas(grid.columns * grid.cellSize, grid.rows * grid.cellSize);
