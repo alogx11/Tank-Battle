@@ -1,7 +1,8 @@
 let redTank, blueTank;
 let grid;
+const staticGrid = true;
 function setup() {
-  grid = new GameOfLife(50); // paramter is size of a cell
+  grid = new GameOfLife(25); // paramter is size of a cell
   createCanvas(grid.columns * grid.cellSize, grid.rows * grid.cellSize);
   // tank param (x, y, width, color, speed)
   redTank = new Tank(
@@ -26,9 +27,9 @@ function setup() {
 
 function draw() {
   grid.displayGrid();
-  // if (frameCount % 5 == 0) {
-  //   grid.computeGeneration();
-  // }
+  if (!staticGrid && frameCount % 5 == 0) {
+    grid.computeGeneration();
+  }
   // grid.computeGeneration();
   // Handle controls for the red tank (WASD keys)
   if (redTank.alive) {
@@ -156,5 +157,8 @@ function keyPressed() {
   }
   if (blueTank.alive && key === "/") {
     blueTank.bullets.push(blueTank.shootBullet());
+  }
+  if (key == " ") {
+    grid.createGrid();
   }
 }

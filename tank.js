@@ -41,7 +41,7 @@ class Tank {
   }
 
   shootBullet() {
-    const bulletSpeed = 5 + this.speed; // Set the speed of the bullet
+    const bulletSpeed = this.speed + this.speed; // Set the speed of the bullet
     // Calculate the position at the edge of the tank
     const offsetX = (this.width / 2) * cos(this.angle); // Change '5' for desired offset
     const offsetY = (this.width / 2) * sin(this.angle); // Change '5' for desired offset
