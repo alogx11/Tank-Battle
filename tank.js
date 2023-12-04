@@ -33,11 +33,11 @@ class Tank {
   }
 
   turnLeft() {
-    this.angle -= this.speed;
+    this.angle -= this.speed * 1.25;
   }
 
   turnRight() {
-    this.angle += this.speed;
+    this.angle += this.speed * 1.25;
   }
 
   shootBullet() {

@@ -1,25 +1,29 @@
 let redTank, blueTank;
 let grid;
 const staticGrid = false;
+// sound files for effects
+let bulletHit, tankHit;
 function setup() {
+  bulletHit = loadSound("./assets/bulletHit.mp3");
+  tankHit = loadSound("./assets/tankDestroy.mp3");
   grid = new GameOfLife(25); // paramter is size of a cell
   createCanvas(grid.columns * grid.cellSize, grid.rows * grid.cellSize);
   // tank param (x, y, width, color, speed)
   redTank = new Tank(
-    windowWidth / 4,
-    windowHeight / 2,
-    windowWidth * 0.04,
-    color(255, 0, 0),
-    4,
-    0
+    windowWidth / 4, // start x
+    windowHeight / 2, // start y
+    windowWidth * 0.04, // width
+    color(255, 0, 0), // color
+    6, // speed
+    0 // start angle
   );
   blueTank = new Tank(
-    (windowWidth / 4) * 3,
-    windowHeight / 2,
-    windowWidth * 0.04,
-    color("#00bfff"),
-    4,
-    180
+    (windowWidth / 4) * 3, // start x
+    windowHeight / 2, // start y
+    windowWidth * 0.04, // width
+    color("#00bfff"), // color
+    6, // speed
+    180 // start angle
   );
   grid.createGrid();
   frameRate(30);
@@ -86,10 +90,11 @@ function draw() {
     }
   }
 
+  // display bullets and update bullet collisions
   for (let i = 0; i < redTank.bullets.length; i++) {
     redTank.bullets[i].display();
     redTank.bullets[i].update();
-    // check if a bullet hits a tank
+    // check if a bullet hits grid
     if (
       redTank.bullets[i].isHittingGrid(
         redTank.bullets[i].pos.x,
@@ -97,11 +102,15 @@ function draw() {
         grid.cellSize
       )
     ) {
+      bulletHit.play();
       redTank.bullets.splice(i, 1);
     } else if (blueTank.isHit(redTank.bullets[i]) && blueTank.alive) {
+      // check if a bullet hits a tank
       blueTank.alive = false;
+      tankHit.play();
       redTank.bullets.splice(i, 1);
     } else if (redTank.isHit(redTank.bullets[i]) && redTank.alive) {
+      tankHit.play();
       redTank.alive = false;
       redTank.bullets.splice(i, 1);
     }
@@ -119,20 +128,26 @@ function draw() {
     blueTank.bullets[i].display();
     blueTank.bullets[i].update();
     if (
+      // check if a bullet hits the grid
       blueTank.bullets[i].isHittingGrid(
         blueTank.bullets[i].pos.x,
         blueTank.bullets[i].pos.y,
         grid.cellSize
       )
     ) {
+      bulletHit.play();
       blueTank.bullets.splice(i, 1);
     } else if (blueTank.isHit(blueTank.bullets[i]) && blueTank.alive) {
+      // check if a bullet hits a tank
+      tankHit.play();
       blueTank.alive = false;
       blueTank.bullets.splice(i, 1);
     } else if (redTank.isHit(blueTank.bullets[i]) && redTank.alive) {
+      tankHit.play();
       redTank.alive = false;
       blueTank.bullets.splice(i, 1);
     } else if (
+      // check if bullet goes off the map
       blueTank.bullets[i].pos.x < 0 ||
       blueTank.bullets[i].pos.x > width ||
       blueTank.bullets[i].pos.y < 0 ||
@@ -147,8 +162,6 @@ function draw() {
   if (blueTank.alive) {
     blueTank.display();
   }
-  // redTank.display();
-  // blueTank.display();
 }
 
 function keyPressed() {
@@ -159,9 +172,11 @@ function keyPressed() {
     blueTank.bullets.push(blueTank.shootBullet());
   }
   if (key == " ") {
+    // pressing space resets the grid
     grid.createGrid();
   }
   if (key == "r" || key == "R") {
+    // pressing r resets the tanks
     redTank.alive = true;
     redTank.pos.x = windowWidth / 4;
     redTank.pos.y = windowHeight / 2;
