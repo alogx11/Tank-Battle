@@ -3,8 +3,8 @@ class GameOfLife {
     this.cellSize = cellSize;
     this.grid = [];
     this.nextGrid = [];
-    this.bgColor = color(255);
-    this.aliveColor = color(0);
+    this.bgColor = color("#a9ff9c");
+    this.aliveColor = color("#784601");
     this.columns = Math.floor(windowWidth / cellSize);
     this.rows = Math.floor(windowHeight / cellSize);
   }
@@ -39,6 +39,7 @@ class GameOfLife {
           (redTank.isHittingGrid(i, j, this.cellSize) ||
             blueTank.isHittingGrid(i, j, this.cellSize))
         ) {
+          // we check if a cell needs to die from a tank collision in display because we dont compute next generation on every frame
           print("hit");
           this.grid[i][j] = 0;
         }

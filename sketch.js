@@ -17,7 +17,7 @@ function setup() {
     (windowWidth / 4) * 3,
     windowHeight / 2,
     windowWidth * 0.04,
-    color(0, 0, 255),
+    color("#00bfff"),
     4,
     180
   );
@@ -47,13 +47,13 @@ function draw() {
     }
     if (keyIsDown(87) || keyIsDown(119)) {
       redTank.moveForward();
-      if (redTank.isColliding(blueTank)) {
+      if (redTank.isColliding(blueTank) || redTank.isOutOfBounds()) {
         redTank.moveBack(); // Reverse the movement if it causes a collision
       }
     }
     if (keyIsDown(83) || keyIsDown(115)) {
       redTank.moveBack();
-      if (redTank.isColliding(blueTank)) {
+      if (redTank.isColliding(blueTank) || redTank.isOutOfBounds()) {
         redTank.moveForward(); // Reverse the movement if it causes a collision
       }
     }
@@ -74,13 +74,13 @@ function draw() {
     }
     if (keyIsDown(UP_ARROW)) {
       blueTank.moveForward();
-      if (blueTank.isColliding(redTank)) {
+      if (blueTank.isColliding(redTank) || blueTank.isOutOfBounds()) {
         blueTank.moveBack(); // Reverse the movement if it causes a collision
       }
     }
     if (keyIsDown(DOWN_ARROW)) {
       blueTank.moveBack();
-      if (blueTank.isColliding(redTank)) {
+      if (blueTank.isColliding(redTank) || blueTank.isOutOfBounds()) {
         blueTank.moveForward(); // Reverse the movement if it causes a collision
       }
     }
@@ -160,5 +160,15 @@ function keyPressed() {
   }
   if (key == " ") {
     grid.createGrid();
+  }
+  if (key == "r" || key == "R") {
+    redTank.alive = true;
+    redTank.pos.x = windowWidth / 4;
+    redTank.pos.y = windowHeight / 2;
+    redTank.angle = 0;
+    blueTank.alive = true;
+    blueTank.pos.x = (windowWidth / 4) * 3;
+    blueTank.pos.y = windowHeight / 2;
+    blueTank.angle = 180;
   }
 }

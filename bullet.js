@@ -20,7 +20,7 @@ class Bullet {
 
   isHittingGrid(x, y, cellSize) {
     // x and y are bullet coordinates
-    let i = Math.floor(x / cellSize);
+    let i = Math.floor(x / cellSize); // get grid indices based on bullet coordinate
     let j = Math.floor(y / cellSize);
     if (i >= grid.grid.length || i < 0 || j >= grid.grid[i].length || j < 0) {
       return false;
