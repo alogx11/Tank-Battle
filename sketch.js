@@ -6,8 +6,11 @@ let bulletHit, tankHit;
 function setup() {
   bulletHit = loadSound("./assets/bulletHit.mp3");
   tankHit = loadSound("./assets/tankDestroy.mp3");
+
   grid = new GameOfLife(25); // paramter is size of a cell
+
   createCanvas(grid.columns * grid.cellSize, grid.rows * grid.cellSize);
+
   // tank param (x, y, width, color, speed)
   redTank = new Tank(
     windowWidth / 4, // start x
@@ -17,6 +20,7 @@ function setup() {
     6, // speed
     0 // start angle
   );
+
   blueTank = new Tank(
     (windowWidth / 4) * 3, // start x
     windowHeight / 2, // start y
@@ -34,7 +38,7 @@ function draw() {
   if (!staticGrid && frameCount % 5 == 0) {
     grid.computeGeneration();
   }
-  // grid.computeGeneration();
+
   // Handle controls for the red tank (WASD keys)
   if (redTank.alive) {
     if (keyIsDown(65) || keyIsDown(97)) {
@@ -62,8 +66,9 @@ function draw() {
       }
     }
   }
+
+  // Handle controls for the blue tank (Arrow keys)
   if (blueTank.alive) {
-    // Handle controls for the blue tank (Arrow keys)
     if (keyIsDown(LEFT_ARROW)) {
       blueTank.turnLeft();
       if (blueTank.isColliding(redTank)) {
